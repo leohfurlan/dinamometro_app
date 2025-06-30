@@ -1,4 +1,4 @@
-```yaml
+yaml
 name: Build Windows Executable
 
 on:
@@ -34,4 +34,3 @@ jobs:
       with:
         name: DinamometroApp-Windows
         path: dist/DinamometroApp.exe
-```
