@@ -18,14 +18,15 @@ jobs:
     - name: Set up Python 3.8 32-bit for max compatibility
       uses: actions/setup-python@v5
       with:
-        # AQUI ESTÁ A MUDANÇA PRINCIPAL: Usando Python 3.8
         python-version: '3.8'
         architecture: 'x86'
 
-    # 3. Instala as dependências
-    - name: Install dependencies
+    # 3. Instala as dependências de forma limpa
+    - name: Install dependencies (with cache purge)
       run: |
         python -m pip install --upgrade pip
+        # AQUI ESTÁ O COMANDO MÁGICO: Limpa o cache do pip
+        python -m pip cache purge
         pip install -r requirements.txt
         pip install pyinstaller
 
@@ -33,9 +34,9 @@ jobs:
     - name: Build 32-bit executable
       run: pyinstaller --name "DinamometroApp" --onefile --windowed dinamometro_gui.py
 
-    # 5. Faz o upload do artefato com um nome claro
+    # 5. Faz o upload do artefato final
     - name: Upload final artifact
       uses: actions/upload-artifact@v4
       with:
-        name: DinamometroApp-Win32-py38-compat
+        name: DinamometroApp-Win32-py38-final
         path: dist/DinamometroApp.exe
