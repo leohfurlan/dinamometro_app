@@ -33,7 +33,7 @@ jobs:
 
     # 4. Roda o PyInstaller para criar o .exe
     - name: Build executable with PyInstaller
-      run: pyinstaller --name "DinamometroApp" --onefile --windowed --icon="icone.ico" dinamometro_gui.py
+      run: pyinstaller --name "DinamometroApp" --onefile --windowed dinamometro_gui.py
 
     # 5. Faz o upload do .exe gerado como um "artefato" para download
     - name: Upload artifact
