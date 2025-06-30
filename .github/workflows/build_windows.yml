@@ -1,4 +1,4 @@
-name: Build Windows Executable (32-bit)
+name: Build Windows Executable (32-bit, Compatível com Win7)
 
 on:
   push:
@@ -14,28 +14,28 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # 2. Configura o ambiente Python para 32-bit
-    - name: Set up Python 32-bit
+    # 2. Configura o ambiente Python 3.8 de 32-bit
+    - name: Set up Python 3.8 32-bit for max compatibility
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
-        # AQUI ESTÁ A MUDANÇA: Especifica a arquitetura 32-bit (x86)
+        # AQUI ESTÁ A MUDANÇA PRINCIPAL: Usando Python 3.8
+        python-version: '3.8'
         architecture: 'x86'
 
-    # 3. Instala as dependências (pip vai buscar as versões de 32-bit)
+    # 3. Instala as dependências
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pyinstaller
 
-    # 4. Roda o PyInstaller (ele vai criar um .exe de 32-bit)
-    - name: Build 32-bit executable with PyInstaller
+    # 4. Roda o PyInstaller
+    - name: Build 32-bit executable
       run: pyinstaller --name "DinamometroApp" --onefile --windowed dinamometro_gui.py
 
-    # 5. Faz o upload do artefato para download
-    - name: Upload 32-bit artifact
+    # 5. Faz o upload do artefato com um nome claro
+    - name: Upload final artifact
       uses: actions/upload-artifact@v4
       with:
-        name: DinamometroApp-Windows-32bit
+        name: DinamometroApp-Win32-py38-compat
         path: dist/DinamometroApp.exe
