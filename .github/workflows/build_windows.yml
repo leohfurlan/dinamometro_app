@@ -1,41 +1,37 @@
 name: Build Windows Executable
 
-# Triggers para o workflow
 on:
-  # Roda quando houver um push para a branch 'main'
   push:
     branches: [ "main" ]
-  # Permite que você rode este workflow manualmente pela aba Actions do GitHub
   workflow_dispatch:
 
 jobs:
   build:
-    # O tipo de máquina virtual que o workflow vai usar
     runs-on: windows-latest
 
     steps:
-    # 1. Baixa o código do seu repositório para dentro da máquina virtual
+    # 1. Baixa o código do repositório
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # 2. Configura o ambiente Python na versão especificada
+    # 2. Configura o ambiente Python
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
-    # 3. Instala as dependências do projeto
+    # 3. Instala as dependências
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pyinstaller
 
-    # 4. Roda o PyInstaller para criar o .exe
+    # 4. Roda o PyInstaller (sem a opção --icon)
     - name: Build executable with PyInstaller
       run: pyinstaller --name "DinamometroApp" --onefile --windowed dinamometro_gui.py
 
-    # 5. Faz o upload do .exe gerado como um "artefato" para download
+    # 5. Faz o upload do artefato para download
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
