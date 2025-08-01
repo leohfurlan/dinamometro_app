@@ -1,2 +1,2 @@
-pymodbus
+pymodbus>=3.0
 pyserial
